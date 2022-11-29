@@ -13,7 +13,7 @@ class FoodSerializer(serializers.ModelSerializer):
         fields = ('name', 'description', 'price', 'is_vegan', 'is_special', 'toppings')
 
     def get_toppings(self, obj: Food) -> List[str]:
-        return obj.toppings.values_list('name', flat=True)
+        return [topping.name for topping in obj.toppings.all()]
 
 
 class PublishedFoodsListSerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class PublishedFoodsListSerializer(serializers.ModelSerializer):
         is_special = request.query_params.get('is_special')
         toppings = request.query_params.getlist('toppings')
 
-        foods_qs = obj.foods.filter(is_publish=True)
+        foods_qs = obj.foods.prefetch_related('toppings').filter(is_publish=True)
         if is_vegan is not None:
             foods_qs = foods_qs.filter(is_vegan=is_vegan in ['True', 'true', '1', 'yes'])
 
