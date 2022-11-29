@@ -14,7 +14,7 @@
             {
                "name": "Смузи",
                "description": "Смузи 400 мл",
-	             "price": 200,
+	       "price": 200,
                "is_vegan": true,
                "is_special": false,
                "toppings": [ "Киви", "Манго" ]
