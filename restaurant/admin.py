@@ -6,6 +6,7 @@ from restaurant.models import Food, FoodCategory, Topping
 @admin.register(Food)
 class FoodAdmin(admin.ModelAdmin):
     list_display = (
+        'name',
         'category',
         'description',
         'price',
@@ -15,10 +16,10 @@ class FoodAdmin(admin.ModelAdmin):
         'toppings_count'
     )
     list_filter = ('category', 'is_special', 'is_vegan', 'is_publish')
-    search_fields = ('description',)
+    search_fields = ('name', 'description',)
     list_select_related = ('category',)
 
-    def toppings_count(self, obj: Food):
+    def toppings_count(self, obj: Food) -> int:
         return obj.toppings.count()
 
 

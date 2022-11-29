@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework.generics import ListAPIView
 
-# Create your views here.
+from restaurant.models import FoodCategory
+from restaurant.serializers import PublishedFoodsListSerializer
+
+
+class MenuListApiView(ListAPIView):
+    queryset = FoodCategory.objects.all()
+    serializer_class = PublishedFoodsListSerializer
